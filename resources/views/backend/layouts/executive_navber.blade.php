@@ -1,3 +1,4 @@
+
 <div class="navbar-custom">
     <div class="topbar container-fluid">
         <div class="d-flex align-items-center gap-1">
@@ -348,7 +349,7 @@
                                 class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i></h5>
                     </span>
                 </a>
-                <form action="{{route('logout')}}" method="POST">
+                <form action="{{route('executive.logout')}}" method="POST">
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                     <!-- item-->
                     <div class=" dropdown-header noti-title">

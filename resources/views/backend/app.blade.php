@@ -8,11 +8,23 @@
     <div class="wrapper">
 
         <!-- ========== Topbar Start ========== -->
-        @include('backend.layouts.navber')
+         @if(Auth::guard('web')->check())
+         @include ("backend.layouts.navber")
+         @elseif (Auth::guard('manager')->check())
+         @include("backend.layouts.manager_navber")
+         @elseif (Auth::guard('executive')->check())
+         @include("backend.layouts.executive_navber")
+         @endif
         <!-- ========== Topbar End ========== -->
         
         <!-- ========== Left Sidebar Start ========== -->
-        @include('backend.layouts.sideber')
+         @if(Auth::guard('web')->check())
+         @include ("backend.layouts.sideber")
+         @elseif (Auth::guard('manager')->check())
+         @include("backend.layouts.manager_sideber")
+         @elseif (Auth::guard('executive')->check())
+         @include("backend.layouts.executive_sideber")
+         @endif
         <!-- ========== Left Sidebar End ========== -->
 
         <!-- ============================================================== -->

@@ -43,13 +43,13 @@
                                 </div>
                                 <div class="p-4 my-auto">
                                     <div class="text-center">
-                                        <h4 class="fs-20">Admin Sign Up</h4>
+                                        <h4 class="fs-20">Manager Sign Up</h4>
                                         <p class="text-muted mb-3">Enter your email address and password to access
                                             account.</p>
                                     </div>
 
                                     <!-- form -->
-                                    <form method="POST" action="{{ route('register') }}">
+                                    <form method="POST" action="{{ route('manager.register') }}">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="fullname" class="form-label">Full Name</label>
@@ -85,7 +85,7 @@
                                                 Up</button>
                                         </div><br>
                                         <div class="col-12 text-center">
-                                            <p class="text-dark-emphasis">Already have account? <a href="{{route('login')}}"
+                                            <p class="text-dark-emphasis">Already have account? <a href="{{ route('manager.login') }}"
                                                     class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Log In</b></a>
                                             </p>
                                         </div>

@@ -25,7 +25,7 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title">Admin</li>
+            <li class="side-nav-title">Manager</li>
 
             <li class="side-nav-item">
                 <a href="{{route('dashboard')}}" class="side-nav-link">
@@ -230,7 +230,7 @@
             </li>
             <li class="side-nav-item">
                 <div data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link text-center">
-                    <span><form action="{{route('logout')}}" method="POST">
+                    <span><form action="{{route('manager.logout')}}" method="POST">
                         @csrf
                         <button class="btn btn-danger btn-sm">Logout</button>
                     </form></span>

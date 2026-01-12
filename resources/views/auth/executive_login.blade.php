@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Log In | Velonic - Inventory Management System</title>
+    <title>Log In | Velonic - Inventory System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
     <meta content="Techzaa" name="author" />
@@ -43,19 +43,19 @@
                                     </div>
                                     <div class="p-4 my-auto">
                                         <div class="text-center">
-                                            <h4 class="fs-20">Sign In as Admin</h4>
+                                            <h4 class="fs-20">Sign In as Executive</h4>
                                             <p class="text-muted mb-3">Enter your email address and password to access
                                                 account.
                                             </p>
                                         </div>
 
                                         <!-- form -->
-                                        <form method="POST" action="{{ route('login') }}">
+                                        <form method="POST" action="{{ route('executive.login') }}">
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email </label>
                                                 <input class="form-control" type="email" id="emailaddress" name="email" required=""
-                                                    placeholder="name@email.com">
+                                                    placeholder="executive@email.com">
                                             </div>
                                             <div class="mb-3">
                                                 <a href="{{url('')}}/auth-forgotpw.html" class="text-muted float-end"><small>Forgot
@@ -104,7 +104,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <p class="text-dark-emphasis">Don't have an account? <a href="{{route('register')}}"
+                    <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('executive.register') }}"
                             class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Sign up</b></a>
                     </p>
                 </div> <!-- end col -->

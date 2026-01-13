@@ -50,36 +50,11 @@
                             <a href="{{url('')}}/pages-contact-list.html">Product List</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/pages-profile.html">Add Product</a>
-                        </li>
-                        <li>
                             <a href="{{url('')}}/pages-timeline.html">Stock Count</a>
                         </li>
                     </ul>
                 </div>
             </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarPagesAuth" aria-expanded="false" aria-controls="sidebarPagesAuth" class="side-nav-link">
-                    <i class="ri-group-2-line"></i>
-                    <span> Purchase </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarPagesAuth">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{url('')}}/auth-login.html">Purchase List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/auth-register.html">Add Purchase</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/auth-logout.html">Purchase Return</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI" class="side-nav-link">
                     <i class="ri-briefcase-line"></i>
@@ -105,71 +80,6 @@
             </li>
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarExtendedUI" aria-expanded="false" aria-controls="sidebarExtendedUI" class="side-nav-link">
-                    <i class="ri-compasses-2-line"></i>
-                    <span> Expense </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarExtendedUI">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{url('')}}/extended-portlets.html">Expense Category</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/extended-scrollbar.html">Expense List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/extended-range-slider.html">Add Expense</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarIcons" aria-expanded="false" aria-controls="sidebarIcons" class="side-nav-link">
-                    <i class="ri-pencil-ruler-2-line"></i>
-                    <span> Income </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarIcons">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{url('')}}/extended-portlets.html">Income Category</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/extended-scrollbar.html">Income List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/extended-range-slider.html">Add Income</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarCharts" aria-expanded="false" aria-controls="sidebarCharts" class="side-nav-link">
-                    <i class="ri-donut-chart-fill"></i>
-                    <span> People </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarCharts">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{url('')}}/charts-apex.html">Customer List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/charts-chartjs.html">Supplier List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/charts-sparklines.html">Manager List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/charts-sparklines.html">Staff List</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">
                     <i class="ri-survey-line"></i>
                     <span> Reports </span>
@@ -178,52 +88,16 @@
                 <div class="collapse" id="sidebarForms">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{url('')}}/form-elements.html">Summary Report</a>
-                        </li>
-                        <li>
                             <a href="{{url('')}}/form-advanced.html">Best Seller</a>
                         </li>
                         <li>
                             <a href="{{url('')}}/form-validation.html">Daily Sale</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/form-wizard.html">Monthly Sale</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/form-fileuploads.html">Daily Purchase</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/form-editors.html">Monthly Purchase</a>
-                        </li>
-                        <li>
                             <a href="{{url('')}}/form-image-crop.html">Product Expiry Report</a>
                         </li>
                         <li>
                             <a href="{{url('')}}/form-x-editable.html">Product Quantity Alert</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="{{url('')}}/#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">
-                    <i class="ri-table-line"></i>
-                    <span> Settings </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarTables">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{url('')}}/tables-basic.html">Discount Setting</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/tables-datatable.html">Discount</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/tables-editable.html">Role Permission</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/tables-responsive.html">User Profile</a>
                         </li>
                     </ul>
                 </div>

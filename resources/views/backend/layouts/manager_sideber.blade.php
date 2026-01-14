@@ -28,7 +28,7 @@
             <li class="side-nav-title">Manager</li>
 
             <li class="side-nav-item">
-                <a href="{{route('dashboard')}}" class="side-nav-link">
+                <a href="{{url('manager/dashboard')}}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
                     <span class="badge bg-success float-end"></span>
                     <span> Dashboard </span>
@@ -44,13 +44,13 @@
                 <div class="collapse" id="sidebarPages">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{url('')}}/pages-starter.html">Category</a>
+                            <a href="{{route('category.index')}}">Category</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/pages-contact-list.html">Product List</a>
+                            <a href="{{route('product.index')}}">Product List</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/pages-profile.html">Add Product</a>
+                            <a href="{{route('product.create')}}">Add Product</a>
                         </li>
                         <li>
                             <a href="{{url('')}}/pages-timeline.html">Stock Count</a>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,5 +69,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//Routes for Category:
+Route::middleware('auth:web,manager,executive')->group(function () {
+    Route::resource('category', CategoryController::class);
+});
+Route::middleware('auth:web,manager,executive')->group(function () {
+    Route::resource('product', ProductController::class);
+});
+
 
 require __DIR__.'/auth.php';

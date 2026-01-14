@@ -31,7 +31,7 @@
                             <!-- <div class="col-lg-6 d-none d-lg-block p-2">
                                 <img src="{{url('')}}/assets/images/auth-img.jpg" alt="" class="img-fluid rounded h-100">
                             </div> -->
-                            <div >
+                            <div>
                                 <div class="d-flex flex-column h-100">
                                     <div class="auth-brand p-4 text-center">
                                         <a href="{{url('')}}/index.html" class="logo-light">
@@ -51,11 +51,25 @@
 
                                         <!-- form -->
                                         <form method="POST" action="{{ route('login') }}">
+                                            <!-- @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            @endif -->
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email </label>
-                                                <input class="form-control" type="email" id="emailaddress" name="email" required=""
+                                                <input class="form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" value="{{ old('email')}}" name="email" required=""
                                                     placeholder="name@email.com">
+                                                @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ "Email or Password is incorrect." }}</strong>
+                                                </span>
+                                                @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <a href="{{url('')}}/auth-forgotpw.html" class="text-muted float-end"><small>Forgot
@@ -117,7 +131,9 @@
 
     <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
-            <script>document.write(new Date().getFullYear())</script> © Velonic - by Md. Mahmudul Islam
+            <script>
+                document.write(new Date().getFullYear())
+            </script> © Velonic - by Md. Mahmudul Islam
         </span>
     </footer>
     <!-- Vendor js -->

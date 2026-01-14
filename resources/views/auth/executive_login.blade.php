@@ -54,8 +54,13 @@
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email </label>
-                                                <input class="form-control" type="email" id="emailaddress" name="email" required=""
+                                                <input class="form-control @error('email') is-invalid @enderror" value="{{ old('email')}}" type="email" id="emailaddress" name="email" required=""
                                                     placeholder="executive@email.com">
+                                                @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ "Email or Password is incorrect." }}</strong>
+                                                </span>
+                                                @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <a href="{{url('')}}/auth-forgotpw.html" class="text-muted float-end"><small>Forgot

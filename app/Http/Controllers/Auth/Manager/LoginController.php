@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Manager;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Manager;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -20,21 +21,34 @@ class LoginController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
-            'password' => ['required', 'string'],
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        if(! Auth::guard('manager')->attempt($request->only('email', 'password'), $request->boolean('remember')))
-        {
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+        // Check credentials first
+        if (Auth::guard('manager')->validate([
+            'email' => $request->email,
+            'password' => $request->password,
+        ])) {
+
+            $manager = Manager::where('email', $request->email)->first();
+
+            // Inactive account → block + flash message
+            if ($manager->status == 0) {
+                return back()->with('inactive', true);
+            }
+
+            // Active → login
+            Auth::guard('manager')->login($manager);
+
+            return redirect()->intended(RouteServiceProvider::MANAGER_DASHBOARD);
         }
 
-        $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::MANAGER_DASHBOARD);
+        return back()
+            ->withInput()
+            ->with('error', 'Email or Password is incorrect.');
     }
+
 
     public function destroy(Request $request): RedirectResponse
     {

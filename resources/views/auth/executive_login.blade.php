@@ -51,16 +51,18 @@
 
                                         <!-- form -->
                                         <form method="POST" action="{{ route('executive.login') }}">
+                                            @if(session('inactive'))
+                                            <div class="alert alert-warning alert-dismissible fade show">
+                                                Your account is currently inactive. Please contact your manager.
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                            </div>
+                                            @endif
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email </label>
                                                 <input class="form-control @error('email') is-invalid @enderror" value="{{ old('email')}}" type="email" id="emailaddress" name="email" required=""
                                                     placeholder="executive@email.com">
-                                                @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ "Email or Password is incorrect." }}</strong>
-                                                </span>
-                                                @enderror
+                                               
                                             </div>
                                             <div class="mb-3">
                                                 <a href="{{url('')}}/auth-forgotpw.html" class="text-muted float-end"><small>Forgot
@@ -69,6 +71,11 @@
                                                 <label for="password" class="form-label">Password</label>
                                                 <input class="form-control" type="password" required="" name="password" id="password"
                                                     placeholder="Password">
+                                                @if(session('error'))
+                                                <br><div class="alert alert-danger alert-dismissible fade show">
+                                                    {{ session('error') }}
+                                                </div>
+                                                @endif
                                             </div>
                                             <div class="mb-3">
                                                 <div class="form-check">

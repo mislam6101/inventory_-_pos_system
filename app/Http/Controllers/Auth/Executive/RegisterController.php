@@ -28,6 +28,7 @@ class RegisterController extends Controller
 
         $executive = Executive::create([
             'name' => $request->name,
+            'contact_number' => $request->contact_number,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

@@ -24,10 +24,12 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Manager::class],
             'password' => ['required', 'confirmed', 'min:8'],
+            'contact_number' => 'nullable|string|max:20',
         ]);
 
         $manager = Manager::create([
             'name' => $request->name,
+            'contact_number' => $request->contact_number,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

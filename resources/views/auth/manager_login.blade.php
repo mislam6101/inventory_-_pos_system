@@ -31,7 +31,7 @@
                             <!-- <div class="col-lg-6 d-none d-lg-block p-2">
                                 <img src="{{url('')}}/assets/images/auth-img.jpg" alt="" class="img-fluid rounded h-100">
                             </div> -->
-                            <div >
+                            <div>
                                 <div class="d-flex flex-column h-100">
                                     <div class="auth-brand p-4 text-center">
                                         <a href="{{url('')}}/index.html" class="logo-light">
@@ -51,16 +51,18 @@
 
                                         <!-- form -->
                                         <form method="POST" action="{{ route('manager.login') }}">
+                                            @if(session('inactive'))
+                                            <div class="alert alert-warning alert-dismissible fade show">
+                                                Your account is currently inactive. Please contact admin.
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                            </div>
+                                            @endif
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email </label>
-                                                <input class="form-control @error('email') is-invalid @enderror" value="{{ old('email')}}" type="email" id="emailaddress" name="email" required=""
+                                                <input class="form-control" value="{{ old('email')}}" type="email" id="emailaddress" name="email" required=""
                                                     placeholder="manager@email.com">
-                                                @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ "Email or Password is incorrect." }}</strong>
-                                                </span>
-                                                @enderror
+                                                
                                             </div>
                                             <div class="mb-3">
                                                 <a href="{{url('')}}/auth-forgotpw.html" class="text-muted float-end"><small>Forgot
@@ -69,6 +71,11 @@
                                                 <label for="password" class="form-label">Password</label>
                                                 <input class="form-control" type="password" required="" name="password" id="password"
                                                     placeholder="Password">
+                                                @if(session('error'))
+                                                <br><div class="alert alert-danger alert-dismissible fade show">
+                                                    {{ session('error') }}
+                                                </div>
+                                                @endif
                                             </div>
                                             <div class="mb-3">
                                                 <div class="form-check">
@@ -122,7 +129,9 @@
 
     <footer class="footer footer-alt fw-medium">
         <span class="text-dark">
-            <script>document.write(new Date().getFullYear())</script> © Velonic - by Md. Mahmudul Islam
+            <script>
+                document.write(new Date().getFullYear())
+            </script> © Velonic - by Md. Mahmudul Islam
         </span>
     </footer>
     <!-- Vendor js -->

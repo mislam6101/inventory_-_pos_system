@@ -160,10 +160,7 @@
                             <a href="{{url('')}}/charts-chartjs.html">Supplier List</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/charts-sparklines.html">Manager List</a>
-                        </li>
-                        <li>
-                            <a href="{{url('')}}/charts-sparklines.html">Staff List</a>
+                            <a href="{{route('executive.index')}}">Staff List</a>
                         </li>
                     </ul>
                 </div>

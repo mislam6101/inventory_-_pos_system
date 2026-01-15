@@ -57,7 +57,12 @@
                                                 placeholder="Your name" required="">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="emailaddress" class="form-label">Email address</label>
+                                            <label for="fullname" class="form-label">Contact Number</label>
+                                            <input type="text" name="contact_number" class="form-control" placeholder="Contact Number">
+
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="emailaddress" class="form-label">Email Address</label>
                                             <input class="form-control" type="email" id="emailaddress" required="" name="email"
                                                 placeholder="name@email.com">
                                         </div>

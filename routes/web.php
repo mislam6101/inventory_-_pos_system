@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExecutiveController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -74,9 +76,25 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth:web,manager,executive')->group(function () {
     Route::resource('category', CategoryController::class);
 });
+
+//Routes for Products:
 Route::middleware('auth:web,manager,executive')->group(function () {
     Route::resource('product', ProductController::class);
 });
+
+//Routes for Manager:
+Route::middleware('auth:web')->group(function () {
+    Route::resource('manager', ManagerController::class);
+});
+Route::post('/manager/status-update', [ManagerController::class, 'statusUpdate'])
+    ->name('manager.status.update');
+
+//Routes for Executive:
+Route::middleware('auth:web,manager')->group(function () {
+    Route::resource('executive', ExecutiveController::class);
+});
+Route::post('/executive/status-update', [ExecutiveController::class, 'statusUpdate'])
+    ->name('executive.status.update');
 
 
 require __DIR__.'/auth.php';

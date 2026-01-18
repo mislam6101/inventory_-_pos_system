@@ -5,6 +5,8 @@ use App\Http\Controllers\ExecutiveController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -95,6 +97,18 @@ Route::middleware('auth:web,manager')->group(function () {
 });
 Route::post('/executive/status-update', [ExecutiveController::class, 'statusUpdate'])
     ->name('executive.status.update');
+
+//Routes for Suppliers:
+
+Route::middleware('auth:web,manager')->group(function () {
+    Route::resource('supplier', SupplierController::class);
+});
+
+//Routes for Purchases:
+
+Route::middleware('auth:web,manager')->group(function () {
+    Route::resource('purchase', PurchaseController::class);
+});
 
 
 require __DIR__.'/auth.php';

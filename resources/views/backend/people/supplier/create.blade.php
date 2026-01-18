@@ -53,7 +53,7 @@
                                 <li class="breadcrumb-item active">Data Tables</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create New Product</h4>
+                        <h4 class="page-title">Add New Supplier</h4>
                     </div>
                 </div>
             </div>
@@ -61,66 +61,33 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="header-title">Add Product</h4>
-
+                            <h4 class="header-title">Add Supplier</h4>
+                            
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form method="POST" action="{{route('product.store')}}" enctype="multipart/form-data">
+                                    <form method="POST" action="{{route('supplier.store')}}">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Product Name <span style="color: red;">*</span></label>
-                                            <input type="text" id="simpleinput" class="form-control" name="prod_name">
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Product Category <span style="color: red;">*</span></label>
-                                            <select name="category_id" class="form-control" required>
-                                                <option value="">-- Select Category --</option>
-                                                @foreach($cats as $cat)
-                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label for="simpleinput" class="form-label">Supplier Name</label>
+                                            <input type="text" id="simpleinput" class="form-control" name="supp_name">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Price <span style="color: red;">*</span></label>
-                                            <input type="number" id="simpleinput" class="form-control" name="prod_price">
+                                            <label for="simpleinput" class="form-label">Contact Number</label>
+                                            <input type="text" id="simpleinput" class="form-control" name="contact">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Quantity <span style="color: red;">*</span></label>
-                                            <input type="text" id="simpleinput" class="form-control" name="prod_quantity">
+                                            <label for="simpleinput" class="form-label">email</label>
+                                            <input type="email" id="simpleinput" class="form-control" name="email" placeholder="name@email.com">
                                         </div>
-                                        
-
-                                </div> <!-- end col -->
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="simpleinput" class="form-label">SKU <span style="color: red;">*</span></label>
-                                        <input type="text" id="simpleinput" class="form-control" name="prod_sku">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="simpleinput" class="form-label">Details</label>
-                                        <input type="text" id="simpleinput" class="form-control" name="prod_details">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="simpleinput" class="form-label">Discount Price</label>
-                                        <input type="text" id="simpleinput" class="form-control" name="prod_dis_price">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="prod_status" class="form-label">Status <span style="color: red;">*</span></label>
-                                        <select name="prod_status" id="prod_status" class="form-control" required>
-                                            <option value="1" {{ old('prod_status') == 1 ? 'selected' : '' }}>Active</option>
-                                            <option value="0" {{ old('prod_status') == 0 ? 'selected' : '' }}>Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                            <label for="image">Product Image</label>
-                                            <input type="file" name="image" class="form-control" accept="image/*">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">Supplier Address</label>
+                                            <input type="text" id="simpleinput" class="form-control" name="address">
                                         </div>
-                                        <button class="btn btn-success">CREATE</button>
-                                </form>
+                                        <button class="btn btn-success">Add New</button>
+                                    </form>
+                                </div> <!-- end col --> 
                             </div>
                             <!-- end row-->
                         </div> <!-- end card-body -->

@@ -5,26 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Purchase extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'category_id',
+        'supplier_id',
+        'ref',
         'name',
         'sku',
-        'short_description',
-        'description',
+        'created_by',
         'price',
         'discount_price',
+        'shipping_cost',
+        'grand_total',
         'quantity',
-        'image',
-        'status',
     ];
 
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }

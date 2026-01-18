@@ -25,6 +25,8 @@
     <link href="{{url('')}}/assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet"
         type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 
@@ -53,79 +55,62 @@
                                 <li class="breadcrumb-item active">Data Tables</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Create New Product</h4>
+                        <h4 class="page-title">Products</h4>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
+
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="header-title">Add Product</h4>
-
-                        </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <form method="POST" action="{{route('product.store')}}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Product Name <span style="color: red;">*</span></label>
-                                            <input type="text" id="simpleinput" class="form-control" name="prod_name">
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Product Category <span style="color: red;">*</span></label>
-                                            <select name="category_id" class="form-control" required>
-                                                <option value="">-- Select Category --</option>
-                                                @foreach($cats as $cat)
-                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Price <span style="color: red;">*</span></label>
-                                            <input type="number" id="simpleinput" class="form-control" name="prod_price">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Quantity <span style="color: red;">*</span></label>
-                                            <input type="text" id="simpleinput" class="form-control" name="prod_quantity">
-                                        </div>
-                                        
-
-                                </div> <!-- end col -->
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="simpleinput" class="form-label">SKU <span style="color: red;">*</span></label>
-                                        <input type="text" id="simpleinput" class="form-control" name="prod_sku">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="simpleinput" class="form-label">Details</label>
-                                        <input type="text" id="simpleinput" class="form-control" name="prod_details">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="simpleinput" class="form-label">Discount Price</label>
-                                        <input type="text" id="simpleinput" class="form-control" name="prod_dis_price">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="prod_status" class="form-label">Status <span style="color: red;">*</span></label>
-                                        <select name="prod_status" id="prod_status" class="form-control" required>
-                                            <option value="1" {{ old('prod_status') == 1 ? 'selected' : '' }}>Active</option>
-                                            <option value="0" {{ old('prod_status') == 0 ? 'selected' : '' }}>Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                            <label for="image">Product Image</label>
-                                            <input type="file" name="image" class="form-control" accept="image/*">
-                                        </div>
-                                        <button class="btn btn-success">CREATE</button>
-                                </form>
+                            @if(session('success'))
+                            <div class="alert alert-success">
+                                {{session('success')}}
                             </div>
-                            <!-- end row-->
-                        </div> <!-- end card-body -->
+                            @endif
+                            <br>
+                            <table id="selection-datatable"
+                                class="table table-striped dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Created By</th>
+                                        <th>Product Name</th>
+                                        <th>Product Category</th>
+                                        <th>Supplier</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Discount Price</th>
+                                        <th>Shipping Cost</th>
+                                        <th>Grand Total</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @foreach($purcs as $key => $purc)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$purc->created_by}}</td>
+                                        <td>{{$purc->name}}</td>
+                                        <td>{{$purc->category->name}}</td>
+                                        <td>{{$purc->supplier->name}}</td>
+                                        <td>{{$purc->price}} BDT</td>
+                                        <td>{{$purc->quantity}} PC.</td>
+                                        <td>{{$purc->discount_price}} BDT</td>
+                                        <td>{{$purc->shipping_cost}} BDT</td>
+                                        <td>{{$purc->grand_total}} BDT</td>
+                                    </tr>
+
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+
+                        </div> <!-- end card body-->
                     </div> <!-- end card -->
-                </div><!-- end col -->
+                </div><!-- end col-->
             </div>
             <footer class="footer">
                 <div class="container-fluid">
@@ -146,6 +131,28 @@
 @endsection
 
 @section('scripts')
+<script>
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This category will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
 <script src="{{url('')}}/assets/js/vendor.min.js"></script>
 
 <!-- Datatables js -->
@@ -161,7 +168,7 @@
 <script src="{{url('')}}/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
 <script src="{{url('')}}/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
 <script src="{{url('')}}/assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="{{url('')}}/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+<!-- <script src="{{url('')}}/assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script> -->
 
 <!-- Datatable Demo Aapp js -->
 <script src="{{url('')}}/assets/js/pages/datatable.init.js"></script>

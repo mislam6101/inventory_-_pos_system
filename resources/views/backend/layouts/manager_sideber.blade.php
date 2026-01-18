@@ -68,10 +68,10 @@
                 <div class="collapse" id="sidebarPagesAuth">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{url('')}}/auth-login.html">Purchase List</a>
+                            <a href="{{route('purchase.index')}}">Purchase List</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/auth-register.html">Add Purchase</a>
+                            <a href="{{route('purchase.create')}}">Add Purchase</a>
                         </li>
                         <li>
                             <a href="{{url('')}}/auth-logout.html">Purchase Return</a>
@@ -157,7 +157,7 @@
                             <a href="{{url('')}}/charts-apex.html">Customer List</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/charts-chartjs.html">Supplier List</a>
+                            <a href="{{route('supplier.index')}}">Supplier List</a>
                         </li>
                         <li>
                             <a href="{{route('executive.index')}}">Staff List</a>

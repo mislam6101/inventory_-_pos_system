@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExecutiveController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
@@ -77,6 +78,11 @@ Route::middleware('auth')->group(function () {
 //Routes for Category:
 Route::middleware('auth:web,manager,executive')->group(function () {
     Route::resource('category', CategoryController::class);
+});
+
+//Routes for POS:
+    Route::middleware('auth:web,manager,executive')->group(function () {
+    Route::resource('pos', POSController::class);
 });
 
 //Routes for Products:

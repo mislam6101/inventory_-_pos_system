@@ -67,7 +67,7 @@
                             <a href="{{url('')}}/ui-accordions.html">Sale List</a>
                         </li>
                         <li>
-                            <a href="{{url('')}}/ui-alerts.html">POS</a>
+                            <a href="{{route('pos.index')}}">POS</a>
                         </li>
                         <li>
                             <a href="{{url('')}}/ui-avatars.html">Add Sale</a>

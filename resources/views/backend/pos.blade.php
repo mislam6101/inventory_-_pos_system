@@ -20,10 +20,6 @@
         .product-card {
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            height: 220px;
-            /* fixed height for all cards */
-            display: flex;
-            flex-direction: column;
         }
 
         .card-body {
@@ -54,6 +50,9 @@
             position: relative;
         }
 
+        .im {
+            height: 180px;
+        }
         .stock-badge {
             position: absolute;
             top: 8px;
@@ -115,7 +114,17 @@
                             <span class="avatar fs-3">👤</span>
                             <div>
                                 <div class="fw-bold text-primary">
-                                    Md. Mahmudul Islam
+                                    @php
+                                    if (Auth::guard('web')->check()) {
+                                    echo Auth::guard('web')->user()->name;
+                                    } 
+                                    elseif (Auth::guard('manager')->check()) {
+                                    echo Auth::guard('manager')->user()->name;
+                                    }
+                                    elseif (Auth::guard('executive')->check()) {
+                                    echo Auth::guard('executive')->user()->name;
+                                    }
+                                    @endphp
                                 </div>
                                 <small class="text-secondary d-flex align-items-center gap-2">
                                     <span
@@ -196,14 +205,14 @@
 
                 <div class="row g-3" id="products">
 
-                    <!-- Fruits -->
+                   
                     @foreach($prods as $key => $prod)
                     <div class="col-md-3 product" data-category="{{$prod->category_id}}" data-barcode="{{$prod->sku}}" data-stock="{{$prod->quantity}}">
                         <div class="card product-card add-product shadow-sm" data-name="{{ $prod->name }}" data-price="{{$prod->price}}"
                             style="background-color: #ffffff;">
                             <div class="product-img-wrap">
                                 @if($prod->image)
-                                <img class="card-img-top rounded-3" src="{{ asset('storage/products/'.$prod->image) }}" alt="{{ $prod->name }}">
+                                <img class="card-img-top rounded-3 im" src="{{ asset('storage/products/'.$prod->image) }}" alt="{{ $prod->name }}">
                                 @else
                                 <span>No Image</span>
                                 @endif

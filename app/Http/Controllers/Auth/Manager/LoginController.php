@@ -58,6 +58,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/manager/login');
+        return redirect('/');
     }
 }

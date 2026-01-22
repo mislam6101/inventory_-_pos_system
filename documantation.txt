@@ -1,0 +1,105 @@
+Inventory & POS Management System
+
+1. Project Overview
+
+The Inventory & POS Management System is a web-based application designed to efficiently manage products, stock, sales (Point of Sale), and users within a business.
+The system allows Admin, Manager, and Staff users to perform tasks based on their assigned roles, ensuring smooth and secure operations.
+
+
+2. Project Objectives
+
+* Manage inventory and stock in real time
+* Enable fast and accurate sales through a POS system
+* Control user access with role-based permissions
+* Reduce manual work and human errors
+* Generate business reports for better decision-making
+
+
+3. User Roles & Responsibilities
+
+i. Admin
+
+* Full system access and control
+* Create, update, and delete users (Manager, Staff)
+* Manage categories, suppliers, and products
+* View sales and stock reports
+
+ii. Manager
+
+* Manage products and inventory
+* Manage suppliers
+* Monitor sales activities
+* Track staff performance
+
+iii. Executive
+
+* Perform sales using the POS system
+* Generate invoices
+* Limited access (no permission to manage system data)
+
+
+4. Core Modules
+
+	i. Authentication & Authorization
+
+	* Secure login and logout system
+	* Role-based access control (Admin, Manager, Staff)
+
+	ii. Category Management
+
+	* Add, edit, and delete categories
+	* View products by category
+
+	iii. Supplier Management
+
+	* Add, edit, and delete suppliers
+	* Manage supplier contact and address information
+
+	iv. Product Management
+
+	* Add products with category and supplier
+	* Manage price, quantity, and status (Active / Inactive)
+	* Update product stock
+
+	v. Inventory / Stock Management
+
+	* Real-time stock updates
+	* Track stock-in and stock-out
+	* Low stock alerts (optional)
+
+	vi. POS (Point of Sale)
+
+	* Search and select products
+	* Add products to cart
+	* Update quantities dynamically
+	* Automatic total calculation
+	* Invoice generation
+
+	vii. Sales Management
+
+	* Record daily and monthly sales
+	* View sales history
+	* View invoice details
+
+	viii. Reports
+
+	* Sales reports
+	* Stock reports
+	* User-wise activity reports
+
+
+5. Technology Stack
+
+* Backend: Laravel (PHP)
+* Frontend: Blade Template, Bootstrap
+* Database: MySQL
+* Authentication: Laravel Authentication System
+
+
+6. Key Features
+
+* User-friendly interface
+* Role-based dashboards
+* Secure authentication and authorization
+* Fast and reliable POS system
+* Scalable and maintainable architecture

@@ -14,35 +14,16 @@
 
     <style>
         body {
-            background-color: #0a91c2;
+            background-color: #dbf3fc;
         }
 
         .product-card {
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: all .2s ease-in-out;
         }
-
-        .card-body {
-            flex: 1;
-            /* fill remaining space */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-        }
-
-        .card-body h6 {
-            font-size: 14px;
-            font-weight: 600;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            /* single line */
-        }
-
 
         .product-card:hover {
-            transform: translateY(-5px) scale(1.03);
+            transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -50,9 +31,6 @@
             position: relative;
         }
 
-        .im {
-            height: 180px;
-        }
         .stock-badge {
             position: absolute;
             top: 8px;
@@ -70,86 +48,62 @@
 
         .disabled {
             pointer-events: none;
-            opacity: 0.6;
+            opacity: .6;
         }
 
         .remove-item {
             cursor: pointer;
             font-size: 16px;
-            transition: color 0.2s;
+            transition: color .2s;
         }
 
         .remove-item:hover {
             color: #dc3545;
         }
 
-        .remove-item:hover {
-            color: #dc3545;
+        .card-body h6 {
+            font-size: 14px;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            /* single line */
         }
     </style>
 </head>
 
-<body style="background-color: #dbf3fc;">
+<body>
 
     <div class="container-fluid p-3">
         <div class="row">
 
             <!-- CART -->
             <div class="col-md-5">
-                <!-- TOP HEADER WITH LOGO -->
+                <!-- TOP HEADER WITH LOGO + USER -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <!-- Company Logo at top-left -->
-                    <a href="{{url('')}}/index.html" class="logo logo-dark">
-                        <span class="logo-lg">
-                            <img src="{{url('')}}/assets/images/logo-dark.png" alt="dark logo">
-                        </span>
-                        <span class="logo-sm">
-                            <img src="{{url('')}}/assets/images/logo-sm.png" alt="small logo">
-                        </span>
+                    <a href="{{url('')}}" class="logo">
+                        <img src="{{url('assets/images/logo-dark.png')}}" alt="Logo" height="40">
                     </a>
-
-                    <!-- User info & Dashboard button -->
                     <div class="d-flex align-items-center gap-3">
                         <div class="d-flex align-items-center gap-2">
                             <span class="avatar fs-3">👤</span>
                             <div>
-                                <div class="fw-bold text-primary">
-                                    @php
-                                    if (Auth::guard('web')->check()) {
-                                    echo Auth::guard('web')->user()->name;
-                                    } 
-                                    elseif (Auth::guard('manager')->check()) {
-                                    echo Auth::guard('manager')->user()->name;
-                                    }
-                                    elseif (Auth::guard('executive')->check()) {
-                                    echo Auth::guard('executive')->user()->name;
-                                    }
-                                    @endphp
-                                </div>
+                                <div class="fw-bold text-primary">{{ Auth::user()->name }}</div>
                                 <small class="text-secondary d-flex align-items-center gap-2">
-                                    <span
-                                        style="display:inline-block; width:10px; height:10px; background-color:#28a745; border-radius:50%;"></span>
+                                    <span style="width:10px;height:10px;background:#28a745;border-radius:50%;display:inline-block;"></span>
                                     Online
                                 </small>
                             </div>
                         </div>
-
-                        <!-- Dashboard Button -->
-                        <a href="@if(Auth::guard('web')->check())
-                                    {{ url('dashboard') }}
-                                @elseif (Auth::guard('manager')->check())
-                                    {{ url('manager/dashboard') }}
-                                @elseif (Auth::guard('executive')->check())
-                                    {{ url('executive/dashboard') }}
-                                @endif" class="btn btn-sm btn-outline-primary">
+                        <a href="{{ url('dashboard') }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </div>
                 </div>
 
-
-                <div class="card shadow-sm mb-3" style="background-color: #ffffff;">
-                    <div class="card-header fw-bold" style="background-color: #f1f3f5;">Cart</div>
+                <!-- CART CARD -->
+                <div class="card shadow-sm mb-3" style="background:#fff;">
+                    <div class="card-header fw-bold" style="background:#f1f3f5;">Cart</div>
                     <table class="table mb-0">
                         <thead class="table-light">
                             <tr>
@@ -162,20 +116,13 @@
                         </thead>
                         <tbody id="cart">
                             <tr id="empty">
-                                <td colspan="5" class="text-center text-muted">
-                                    No Data Available
-                                </td>
+                                <td colspan="5" class="text-center text-muted">No Data Available</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="card-footer d-flex justify-content-between align-items-center"
-                        style="background-color: #f1f3f5;">
-                        <div class="fw-bold">
-                            Total: <span id="total">0</span> ৳
-                        </div>
-                        <button class="btn btn-success" id="payBtn">
-                            Pay Now
-                        </button>
+                    <div class="card-footer d-flex justify-content-between align-items-center" style="background:#f1f3f5;">
+                        <div class="fw-bold">Total: <span id="total">0</span> ৳</div>
+                        <button class="btn btn-success" id="payBtn">Pay Now</button>
                     </div>
                 </div>
             </div>
@@ -184,16 +131,14 @@
             <div class="col-md-7">
                 <div class="row mb-3">
                     <div class="col-md-8">
-                        <input type="text" id="searchProduct" class="form-control rounded-3"
-                            placeholder="Search product by name...">
+                        <input type="text" id="searchProduct" class="form-control rounded-3" placeholder="Search product...">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" id="barcode" class="form-control rounded-3"
-                            placeholder="Scan / Enter barcode">
+                        <input type="text" id="barcode" class="form-control rounded-3" placeholder="Scan barcode">
                     </div>
                 </div>
 
-                <!-- CATEGORY DROPDOWN -->
+                <!-- CATEGORY -->
                 <div class="mb-3">
                     <select name="category_id" class="form-select rounded-3" id="category">
                         <option value="">All Categories</option>
@@ -203,98 +148,132 @@
                     </select>
                 </div>
 
+                <!-- PRODUCTS GRID -->
                 <div class="row g-3" id="products">
-
-                   
-                    @foreach($prods as $key => $prod)
-                    <div class="col-md-3 product" data-category="{{$prod->category_id}}" data-barcode="{{$prod->sku}}" data-stock="{{$prod->quantity}}">
-                        <div class="card product-card add-product shadow-sm" data-name="{{ $prod->name }}" data-price="{{$prod->price}}"
-                            style="background-color: #ffffff;">
+                    @foreach($prods as $prod)
+                    <div class="col-md-3 product" data-category="{{ $prod->category_id }}" data-barcode="{{ $prod->sku }}">
+                        <div class="card product-card add-product shadow-sm"
+                            data-id="{{ $prod->id }}"
+                            data-name="{{ $prod->name }}"
+                            data-price="{{ $prod->price }}"
+                            style="background:#fff;">
                             <div class="product-img-wrap">
                                 @if($prod->image)
-                                <img class="card-img-top rounded-3 im" src="{{ asset('storage/products/'.$prod->image) }}" alt="{{ $prod->name }}">
-                                @else
-                                <span>No Image</span>
+                                <img src="{{ asset('storage/products/'.$prod->image) }}" class="card-img-top" style="height:150px;" alt="{{ $prod->name }}">
                                 @endif
                                 <span class="stock-badge">
-                                    Stock: {{$prod->quantity}}
+                                    Stock: <span class="stock-count" data-id="{{ $prod->id }}">{{ $prod->quantity }}</span>
                                 </span>
                             </div>
                             <div class="card-body text-center">
-                                <h6>{{$prod->name}}</h6>
-                                <span class="badge bg-primary">{{$prod->price}}৳</span>
+                                <h6>{{ $prod->name }}</h6>
+                                <span class="badge bg-primary">{{ $prod->price }}৳</span>
                             </div>
                         </div>
                     </div>
                     @endforeach
-
-
-
                 </div>
+
             </div>
         </div>
     </div>
-
-
 
     <script>
         let total = 0;
 
         // CATEGORY FILTER
         $('#category').change(function() {
-            let cat = $(this).val(); // selected value = category_id or empty
-
-            if (!cat) { // empty value = All Categories
-                $('.product').show(); // show all products
-            } else {
-                $('.product').hide();
-                $('.product[data-category="' + cat + '"]').show();
-            }
+            let cat = $(this).val();
+            if (!cat) $('.product').show();
+            else $('.product').hide().filter(`[data-category="${cat}"]`).show();
         });
 
-
-        // ADD TO CART
+        // ADD TO CART WITH DB STOCK UPDATE
         $(document).on('click', '.add-product', function() {
-            $('#empty').remove();
+            let card = $(this);
+            let productBox = card.closest('.product');
+            let stockSpan = productBox.find('.stock-count');
+            let stock = parseInt(stockSpan.text());
+            let productId = card.data('id');
+            let name = card.data('name');
+            let price = parseFloat(card.data('price'));
 
-            let name = $(this).data('name');
-            let price = parseFloat($(this).data('price'));
+            if (stock <= 0) {
+                alert('Out of stock!');
+                return;
+            }
 
+            // AJAX to decrease stock
+            $.post('/product/decrease-stock', {
+                _token: '{{ csrf_token() }}',
+                id: productId
+            }, function(res) {
+                stockSpan.text(res.quantity);
+                if (res.quantity == 0) {
+                    card.addClass('disabled');
+                    productBox.find('.stock-badge').addClass('out-stock');
+                }
+            });
+
+            // Add to cart UI
             let row = $('#cart').find(`tr[data-name="${name}"]`);
-
             if (row.length) {
-                let qty = row.find('.qty').val();
-                qty++;
+                let qty = parseInt(row.find('.qty').val()) + 1;
                 row.find('.qty').val(qty);
                 row.find('.sub').text(qty * price);
             } else {
+                $('#empty').remove();
                 $('#cart').append(`
-                <tr data-name="${name}">
-                    <td>${name}</td>
-                    <td>
-                        <input type="number" class="form-control form-control-sm qty" value="1" min="1">
-                    </td>
-                    <td>${price}</td>
-                    <td class="sub">${price}</td>
-                    <td class="text-center">
-                <i class="bi bi-x-circle-fill text-danger remove-item"
-                title="Remove"></i>
-            </td>
-                </tr>
-            `);
-
+            <tr data-name="${name}">
+                <td>${name}</td>
+                <td><input type="number" class="form-control form-control-sm qty" value="1" min="1"></td>
+                <td>${price}</td>
+                <td class="sub">${price}</td>
+                <td class="text-center"><i class="bi bi-x-circle-fill text-danger remove-item"></i></td>
+            </tr>
+        `);
             }
             calculateTotal();
         });
 
+        // REMOVE ITEM + RESTORE STOCK
+        $(document).on('click', '.remove-item', function() {
+            let row = $(this).closest('tr');
+            let name = row.data('name');
+            let qty = parseInt(row.find('.qty').val());
+
+            let productBox = $('.add-product[data-name="' + name + '"]').closest('.product');
+            let stockSpan = productBox.find('.stock-count');
+            let productId = productBox.find('.add-product').data('id');
+
+            // AJAX increase stock
+            $.post('/product/increase-stock', {
+                _token: '{{ csrf_token() }}',
+                id: productId,
+                qty: qty
+            }, function(res) {
+                stockSpan.text(res.quantity);
+                productBox.find('.add-product').removeClass('disabled');
+                productBox.find('.stock-badge').removeClass('out-stock');
+            });
+
+            row.remove();
+            calculateTotal();
+            if ($('#cart tr').length === 0) {
+                $('#cart').html(`<tr id="empty"><td colspan="5" class="text-center text-muted">No Data Available</td></tr>`);
+            }
+        });
+
+        // QTY CHANGE
         $(document).on('input', '.qty', function() {
             let row = $(this).closest('tr');
             let price = parseFloat(row.find('td:eq(2)').text());
-            let qty = $(this).val();
+            let qty = parseInt($(this).val());
             row.find('.sub').text(price * qty);
             calculateTotal();
         });
 
+        // TOTAL
         function calculateTotal() {
             total = 0;
             $('.sub').each(function() {
@@ -302,75 +281,20 @@
             });
             $('#total').text(total);
         }
-        $('#payBtn').click(function() {
 
-            if ($('#cart tr').length === 0 || $('#empty').length) {
+        // PAY BUTTON
+        $('#payBtn').click(function() {
+            if ($('#cart tr').length == 0 || $('#empty').length) {
                 alert('Cart is empty!');
                 return;
             }
-
-            let total = $('#total').text();
-
-            if (confirm('Confirm payment of ' + total + '৳ ?')) {
+            if (confirm('Confirm payment of ' + $('#total').text() + '৳?')) {
                 alert('Payment Successful 🎉');
-
-                // Reset cart
-                $('#cart').html(`
-                <tr id="empty">
-                    <td colspan="4" class="text-center text-muted">
-                        No Data Available
-                    </td>
-                </tr>
-            `);
+                $('#cart').html(`<tr id="empty"><td colspan="5" class="text-center text-muted">No Data Available</td></tr>`);
                 $('#total').text(0);
             }
         });
-        $('#searchProduct').on('keyup', function() {
-            let value = $(this).val().toLowerCase();
-
-            $('.product').filter(function() {
-                $(this).toggle(
-                    $(this).text().toLowerCase().indexOf(value) > -1
-                );
-            });
-        });
-        $('#barcode').on('keypress', function(e) {
-            if (e.which === 13) { // Enter key
-                let code = $(this).val();
-                let product = $('.product[data-barcode="' + code + '"]');
-
-                if (product.length) {
-                    product.find('.add-product').click();
-                    $(this).val('');
-                } else {
-                    alert('Product not found!');
-                }
-            }
-        });
-
-        $(document).on('click', '.remove-item', function() {
-
-            let row = $(this).closest('tr');
-            let name = row.data('name');
-            let qty = parseInt(row.find('.qty').val());
-
-            // find product box
-            let product = $('.add-product[data-name="' + name + '"]').closest('.product');
-            row.remove();
-            calculateTotal();
-
-            if ($('#cart tr').length === 0) {
-                $('#cart').html(`
-            <tr id="empty">
-                <td colspan="5" class="text-center text-muted">
-                    No Data Available
-                </td>
-            </tr>
-        `);
-            }
-        });
     </script>
-
 </body>
 
 </html>

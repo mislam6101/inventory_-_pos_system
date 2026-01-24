@@ -138,4 +138,19 @@ class ProductController extends Controller
     {
         //
     }
+    public function decreaseStock(Request $request)
+    {
+        $product = Product::find($request->id);
+        if ($product->quantity > 0) {
+            $product->decrement('quantity');
+        }
+        return response()->json(['quantity' => $product->quantity]);
+    }
+
+    public function increaseStock(Request $request)
+    {
+        $product = Product::find($request->id);
+        $product->increment('quantity', $request->qty);
+        return response()->json(['quantity' => $product->quantity]);
+    }
 }

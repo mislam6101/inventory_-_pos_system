@@ -36,17 +36,50 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // Validation
-        $request->validate([
-            'prod_name'       => 'required|string|max:255',
-            'prod_sku'        => 'required|string|max:255|unique:products,sku',
-            'category_id'     => 'required|exists:categories,id',
-            'prod_price'      => 'required|numeric|min:0',
-            'prod_dis_price'  => 'nullable|numeric|min:0',
-            'prod_quantity'   => 'required|integer|min:0',
-            'prod_status'     => 'required|boolean',
-            'prod_details'    => 'nullable|string|max:1000',
-            'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $request->validate(
+            [
+                'prod_name'       => 'required|string|max:255',
+                'prod_sku'        => 'required|string|max:255|unique:products,sku',
+                'category_id'     => 'required|exists:categories,id',
+                'prod_price'      => 'required|numeric|min:0',
+                'prod_dis_price'  => 'nullable|numeric|min:0',
+                'prod_quantity'   => 'required|integer|min:0',
+                'prod_status'     => 'required|boolean',
+                'prod_details'    => 'nullable|string|max:200',
+                'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ],
+            [
+                'prod_name.required'     => 'Product name is required.',
+                'prod_name.string'       => 'Product name must be a valid string.',
+                'prod_name.max'          => 'Product name may not exceed 255 characters.',
+
+                'prod_sku.required'      => 'Product SKU is required.',
+                'prod_sku.string'        => 'Product SKU must be a valid string.',
+                'prod_sku.unique'        => 'This SKU has already been taken.',
+
+                'category_id.required'   => 'Please select a category.',
+                'category_id.exists'     => 'The selected category is invalid.',
+
+                'prod_price.required'    => 'Product price is required.',
+                'prod_price.numeric'     => 'Product price must be a number.',
+                'prod_price.min'         => 'Product price must be at least 0.',
+
+                'prod_dis_price.numeric' => 'Discount price must be a number.',
+                'prod_dis_price.min'     => 'Discount price must be at least 0.',
+
+                'prod_quantity.required' => 'Product quantity is required.',
+                'prod_quantity.integer'  => 'Product quantity must be a number.',
+                'prod_quantity.min'      => 'Product quantity must be at least 0.',
+
+                'prod_status.required'   => 'Product status is required.',
+
+                'prod_details.max'       => 'Product description may not exceed 200 characters.',
+
+                'image.image'            => 'The uploaded file must be an image.',
+                'image.mimes'            => 'The image must be a file of type: jpeg, png, jpg, gif.',
+                'image.max'              => 'The image size must not exceed 2MB.',
+            ]
+        );
 
         $data = [
             'name'         => $request->prod_name,

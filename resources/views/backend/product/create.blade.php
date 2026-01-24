@@ -66,6 +66,34 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
+                                @error('prod_name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('prod_sku')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('category_id')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('prod_price')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('prod_dis_price')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('prod_quantity')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('prod_status')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('prod_details')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('image')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+
                                 <div class="col-lg-6">
                                     <form method="POST" action="{{route('product.store')}}" enctype="multipart/form-data">
                                         @csrf
@@ -91,7 +119,7 @@
                                             <label for="simpleinput" class="form-label">Quantity <span style="color: red;">*</span></label>
                                             <input type="text" id="simpleinput" class="form-control" name="prod_quantity">
                                         </div>
-                                        
+
 
                                 </div> <!-- end col -->
                                 <div class="col-lg-6">
@@ -116,10 +144,10 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                            <label for="image">Product Image</label>
-                                            <input type="file" name="image" class="form-control" accept="image/*">
-                                        </div>
-                                        <button class="btn btn-success">CREATE</button>
+                                    <label for="image">Product Image</label>
+                                    <input type="file" name="image" class="form-control" accept="image/*">
+                                </div>
+                                <button class="btn btn-success">CREATE</button>
                                 </form>
                             </div>
                             <!-- end row-->

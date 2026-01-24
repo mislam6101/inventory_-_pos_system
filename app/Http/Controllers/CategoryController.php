@@ -32,12 +32,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $c_name =  $request->cat_name;
-        $catergory = [
-            'name' => $c_name,
-        ];
-        Category::create($catergory);
-        return redirect('/category');
+        $request->validate(
+            [
+                'cat_name' => 'required|min:3|max:12|unique:categories,name',
+            ],
+            [
+                'required' => 'Category Name Must be Required',
+                'min'      => 'Category Name Must be minimum 3 Character',
+                'max'      => 'Category Name Must within 12 Character',
+                'unique'   => 'Category Name already exists',
+            ]
+        );
+
+        Category::create([
+            'name' => $request->cat_name,
+        ]);
+
+        return redirect()
+            ->route('category.index')
+            ->with('success', 'Category created successfully!');
     }
 
     /**
@@ -61,9 +74,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'cat_name' => 'required|string|max:255'
-        ]);
+        $request->validate(
+            [
+                'cat_name' => 'required|max:12|min:3|unique:categories,name'
+            ],
+            [
+                'required' => 'Category Name Must be Requiered',
+                'min' => 'Category Name Must be minimum 3 Charecter Required',
+                'max' => 'Category Name Must within 12 Charecter',
+                'unique' => 'Category Name has already exist',
+            ]
+        );
 
         $category = Category::findOrFail($id);
         $category->name = $request->cat_name;

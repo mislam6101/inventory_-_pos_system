@@ -62,20 +62,23 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="header-title">Add Category</h4>
-                            
+
                         </div>
                         <div class="card-body">
                             <div class="row">
+                                @error('cat_name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="col-lg-6">
                                     <form method="POST" action="{{route('category.store')}}">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Category Name</label>
-                                            <input type="text" id="simpleinput" class="form-control" name="cat_name">
+                                            <input type="text" id="simpleinput" class="form-control" name="cat_name" value="{{ old('cat_name') }}">
                                         </div>
                                         <button class="btn btn-success">CREATE</button>
                                     </form>
-                                </div> <!-- end col --> 
+                                </div> <!-- end col -->
                             </div>
                             <!-- end row-->
                         </div> <!-- end card-body -->

@@ -11,10 +11,8 @@ class Sale extends Model
 
     protected $fillable = [
         'name',
-        'image',
+        'qty',
         'price',
-        'discount_price',
-        'quantity',
-        'total',
+        'subtotal',
     ];
 }

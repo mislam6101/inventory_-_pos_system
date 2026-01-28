@@ -7,6 +7,7 @@ use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,9 +72,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Routes for Category:
+//Routes for Category & Sale:
 Route::middleware('auth:web,manager,executive')->group(function () {
     Route::resource('category', CategoryController::class);
+    Route::resource('sale', SaleController::class);
 });
 
 //Routes for POS:

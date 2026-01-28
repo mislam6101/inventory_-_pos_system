@@ -67,7 +67,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            /* single line */
         }
     </style>
 </head>
@@ -79,7 +78,7 @@
 
             <!-- CART -->
             <div class="col-md-5">
-                <!-- TOP HEADER WITH LOGO + USER -->
+                <!-- TOP HEADER -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <a href="{{url('')}}" class="logo">
                         <img src="{{url('assets/images/logo-dark.png')}}" alt="Logo" height="40">
@@ -101,30 +100,34 @@
                     </div>
                 </div>
 
-                <!-- CART CARD -->
-                <div class="card shadow-sm mb-3" style="background:#fff;">
-                    <div class="card-header fw-bold" style="background:#f1f3f5;">Cart</div>
-                    <table class="table mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Product</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Sub</th>
-                                <th>Cancel</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cart">
-                            <tr id="empty">
-                                <td colspan="5" class="text-center text-muted">No Data Available</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="card-footer d-flex justify-content-between align-items-center" style="background:#f1f3f5;">
-                        <div class="fw-bold">Total: <span id="total">0</span> ৳</div>
-                        <button class="btn btn-success" id="payBtn">Pay Now</button>
+                <!-- CART CARD WITH FORM -->
+                <form action="{{ route('pos.store') }}" method="POST" id="cartForm">
+                    @csrf
+                    <div class="card shadow-sm mb-3" style="background:#fff;">
+                        <div class="card-header fw-bold" style="background:#f1f3f5;">Cart</div>
+                        <table class="table mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Sub</th>
+                                    <th>Cancel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart">
+                                <tr id="empty">
+                                    <td colspan="5" class="text-center text-muted">No Data Available</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="card-footer d-flex justify-content-between align-items-center" style="background:#f1f3f5;">
+                            <div class="fw-bold">Total: <span id="total">0</span> ৳</div>
+                            <input type="hidden" name="total" id="formTotal" value="0">
+                            <button type="submit" class="btn btn-success" id="payBtn">Pay Now</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- PRODUCTS -->
@@ -188,7 +191,7 @@
             else $('.product').hide().filter(`[data-category="${cat}"]`).show();
         });
 
-        // ADD TO CART WITH DB STOCK UPDATE
+        // ADD TO CART + AJAX STOCK DECREASE
         $(document).on('click', '.add-product', function() {
             let card = $(this);
             let productBox = card.closest('.product');
@@ -203,7 +206,7 @@
                 return;
             }
 
-            // AJAX to decrease stock
+            // AJAX decrease stock
             $.post('/product/decrease-stock', {
                 _token: '{{ csrf_token() }}',
                 id: productId
@@ -236,7 +239,7 @@
             calculateTotal();
         });
 
-        // REMOVE ITEM + RESTORE STOCK
+        // REMOVE ITEM + AJAX STOCK INCREASE
         $(document).on('click', '.remove-item', function() {
             let row = $(this).closest('tr');
             let name = row.data('name');
@@ -246,7 +249,6 @@
             let stockSpan = productBox.find('.stock-count');
             let productId = productBox.find('.add-product').data('id');
 
-            // AJAX increase stock
             $.post('/product/increase-stock', {
                 _token: '{{ csrf_token() }}',
                 id: productId,
@@ -282,17 +284,37 @@
             $('#total').text(total);
         }
 
-        // PAY BUTTON
-        $('#payBtn').click(function() {
-            if ($('#cart tr').length == 0 || $('#empty').length) {
+        // PAY NOW FORM SUBMIT -> hidden inputs generate
+        $('#cartForm').on('submit', function(e) {
+            let rows = $('#cart tr').not('#empty');
+
+            if (rows.length === 0) {
                 alert('Cart is empty!');
+                e.preventDefault();
                 return;
             }
-            if (confirm('Confirm payment of ' + $('#total').text() + '৳?')) {
-                alert('Payment Successful 🎉');
-                $('#cart').html(`<tr id="empty"><td colspan="5" class="text-center text-muted">No Data Available</td></tr>`);
-                $('#total').text(0);
-            }
+
+            // Remove old hidden inputs
+            $('#cartForm input[name^="cart"]').remove();
+
+            // Add hidden inputs dynamically
+            rows.each(function(index) {
+                let row = $(this);
+                let name = row.find('td:eq(0)').text();
+                let qty = row.find('.qty').val();
+                let price = row.find('td:eq(2)').text();
+                let subtotal = row.find('.sub').text();
+
+                $('#cartForm').append(`
+            <input type="hidden" name="cart[${index}][name]" value="${name}">
+            <input type="hidden" name="cart[${index}][qty]" value="${qty}">
+            <input type="hidden" name="cart[${index}][price]" value="${price}">
+            <input type="hidden" name="cart[${index}][subtotal]" value="${subtotal}">
+        `);
+            });
+
+            // Update total hidden input
+            $('#formTotal').val($('#total').text());
         });
     </script>
 </body>

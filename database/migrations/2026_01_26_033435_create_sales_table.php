@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image')->nullable();
+            $table->decimal('qty', 8, 2);
             $table->decimal('price', 8, 2);
-            $table->decimal('discount_price', 8, 2)->nullable();
-            $table->integer('quantity')->default(0);
-            $table->decimal('total', 8, 2);
+            $table->decimal('subtotal', 8, 2);
             $table->timestamps();
         });
     }

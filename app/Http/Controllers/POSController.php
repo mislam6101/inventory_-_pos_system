@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\POS;
 use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class POSController extends Controller
@@ -25,16 +26,24 @@ class POSController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.pay');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+{
+    $cart = $request->cart; // array of products
+    $total = $request->total;
+
+   
+    foreach($cart as $item){
+        Sale::create($item);
     }
+
+    return redirect()->back()->with('success', 'Payment Successful');
+}
 
     /**
      * Display the specified resource.

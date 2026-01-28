@@ -55,7 +55,7 @@
                                 <li class="breadcrumb-item active">Data Tables</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Products</h4>
+                        <h4 class="page-title">Sale List</h4>
                     </div>
                 </div>
             </div>
@@ -99,8 +99,8 @@
                                         <td>{{$sale->name}}</td>
                                         <td>{{$sale->price}} BDT</td>
                                         <td>{{$sale->discount_price ? $sale->discount_price . ' BDT' : " "}} </td>
-                                        <td>{{$sale->quantity}}</td>
-                                        <td>{{$sale->total}} BDT</td>
+                                        <td>{{$sale->qty}}</td>
+                                        <td>{{$sale->subtotal}} BDT</td>
                                     </tr>
 
                                     @endforeach

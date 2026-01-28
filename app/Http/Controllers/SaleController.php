@@ -12,7 +12,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all();
+        $sales = Sale::orderBy('id', 'desc')->get();
         return view("backend.sale.index", compact("sales"));
     }
 

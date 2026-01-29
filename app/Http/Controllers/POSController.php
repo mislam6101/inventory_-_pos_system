@@ -35,7 +35,6 @@ class POSController extends Controller
     public function store(Request $request)
 {
     $cart = $request->cart; // array of products
-    $total = $request->total;
 
    
     foreach($cart as $item){

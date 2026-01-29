@@ -75,12 +75,13 @@
                                 <thead>
                                     <tr>
                                         <th>SL</th>
-                                        <th>Image</th>
                                         <th>Product Name</th>
                                         <th>Price</th>
                                         <th>Discount Price</th>
                                         <th>Quantity</th>
                                         <th>Total</th>
+                                        <th>Time</th>
+                                        <th>Return</th>
                                     </tr>
                                 </thead>
 
@@ -89,18 +90,13 @@
                                     @foreach($sales as $key => $sale)
                                     <tr>
                                         <td>{{$key+1}}</td>
-                                        <td>
-                                            @if($sale->image)
-                                            <img src="{{ asset('storage/products/'.$sale->image) }}" alt="{{ $sale->name }}" style="height : 35px; width : 35px">
-                                            @else
-                                            <span>No Image</span>
-                                            @endif
-                                        </td>
                                         <td>{{$sale->name}}</td>
                                         <td>{{$sale->price}} BDT</td>
-                                        <td>{{$sale->discount_price ? $sale->discount_price . ' BDT' : " "}} </td>
+                                        <td>{{$sale->discount_price ? $sale->discount_price . ' BDT' : " 0 "}} </td>
                                         <td>{{$sale->qty}}</td>
                                         <td>{{$sale->subtotal}} BDT</td>
+                                        <td>{{ $sale->created_at->format('d M, Y h:i A') }}</td>
+                                        <td><button class="badge bg-danger">Return</button></td>
                                     </tr>
 
                                     @endforeach

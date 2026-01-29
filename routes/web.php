@@ -104,14 +104,14 @@ Route::middleware('auth:web,manager')->group(function () {
 Route::post('/executive/status-update', [ExecutiveController::class, 'statusUpdate'])
     ->name('executive.status.update');
 
+    
 //Routes for Suppliers:
-
 Route::middleware('auth:web,manager')->group(function () {
     Route::resource('supplier', SupplierController::class);
 });
 
-//Routes for Purchases:
 
+//Routes for Purchases:
 Route::middleware('auth:web,manager')->group(function () {
     Route::resource('purchase', PurchaseController::class);
 });

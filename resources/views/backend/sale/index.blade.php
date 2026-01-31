@@ -74,33 +74,34 @@
                                 class="table table-striped dt-responsive nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th>SL</th>
-                                        <th>Product Name</th>
+                                        <th>#</th>
+                                        <th>Invoice ID</th>
+                                        <th>Customer</th>
+                                        <th>Contact</th>
+                                        <th>Product</th>
+                                        <th>Qty</th>
                                         <th>Price</th>
-                                        <th>Discount Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Time</th>
-                                        <th>Return</th>
+                                        <th>Subtotal</th>
+                                        <th>Date</th>
                                     </tr>
                                 </thead>
-
-
                                 <tbody>
-                                    @foreach($sales as $key => $sale)
+                                    @php $i = 1; @endphp
+                                    @foreach($sales as $sale)
+                                    @foreach($sale->items as $item)
                                     <tr>
-                                        <td>{{$key+1}}</td>
-                                        <td>{{$sale->name}}</td>
-                                        <td>{{$sale->price}} BDT</td>
-                                        <td>{{$sale->discount_price ? $sale->discount_price . ' BDT' : " 0 "}} </td>
-                                        <td>{{$sale->qty}}</td>
-                                        <td>{{$sale->subtotal}} BDT</td>
-                                        <td>{{ $sale->created_at->format('d M, Y h:i A') }}</td>
-                                        <td><button class="badge bg-danger">Return</button></td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $sale->common_id }}</td>
+                                        <td>{{ $sale->c_name }}</td>
+                                        <td>{{ $sale->cont }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->qty }}</td>
+                                        <td>{{ $item->price }} ৳</td>
+                                        <td>{{ $item->subtotal }} ৳</td>
+                                        <td>{{ $sale->created_at->format('d-M-Y H:i') }}</td>
                                     </tr>
-
                                     @endforeach
-
+                                    @endforeach
                                 </tbody>
                             </table>
 

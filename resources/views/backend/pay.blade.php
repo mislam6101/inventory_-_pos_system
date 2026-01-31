@@ -128,10 +128,15 @@
                             <th>Cancel</th>
                         </tr>
                     </thead>
-                    <tbody id="cart">
-                        <tr id="empty">
-                            <td colspan="5" class="text-center text-muted">No Data Available</td>
+                    <tbody>
+                        @foreach($sales as $sale)
+                        <tr>
+                            <td>{{$sale->name}}</td>
+                            <td>{{$sale->qty}}</td>
+                            <td>{{$sale->price}} BDT</td>
+                            <td>{{$sale->subtotal}} BDT</td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <div class="card-footer d-flex justify-content-between align-items-center" style="background:#f1f3f5;">

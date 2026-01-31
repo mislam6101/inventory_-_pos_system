@@ -89,7 +89,7 @@
                 <div class="collapse" id="sidebarBaseUI">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{route('sale.index')}}">Sale List</a>
+                            <a href="{{route('sales.index')}}">Sale List</a>
                         </li>
                         <li>
                             <a href="{{route('pos.index')}}">POS</a>

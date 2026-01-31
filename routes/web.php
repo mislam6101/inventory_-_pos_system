@@ -72,10 +72,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Routes for Category & Sale:
+//Routes for Category & Sale & invoice:
 Route::middleware('auth:web,manager,executive')->group(function () {
     Route::resource('category', CategoryController::class);
-    Route::resource('sale', SaleController::class);
+    Route::get('sales', [POSController::class, 'sales'])->name('sales.index');
+    Route::get('/invoice/{id}', [POSController::class, 'invoice'])->name('invoice.show');
+    Route::get('/invoice/{id}/download', [POSController::class, 'downloadInvoice'])->name('invoice.download');
 });
 
 //Routes for POS:

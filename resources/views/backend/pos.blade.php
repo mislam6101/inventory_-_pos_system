@@ -98,11 +98,18 @@
                             <i class="bi bi-speedometer2"></i> Dashboard
                         </a>
                     </div>
-                </div>
+                </div><br>
 
                 <!-- CART CARD WITH FORM -->
                 <form action="{{ route('pos.store') }}" method="POST" id="cartForm">
                     @csrf
+                    <div class="card shadow-sm mb-3" style="background:#fff;">
+                        <div class="card-header fw-bold" style="background:#f1f3f5;">Customer's Details</div>
+                        <div style="margin: 10px 15px 10px;">
+                            <input type="text" name="c_name" placeholder="Name">
+                            <input style="margin: 0 10px;" type="text" name="cont" placeholder="Contact">
+                        </div>
+                    </div>
                     <div class="card shadow-sm mb-3" style="background:#fff;">
                         <div class="card-header fw-bold" style="background:#f1f3f5;">Cart</div>
                         <table class="table mb-0">
@@ -285,7 +292,9 @@
         }
 
         // PAY NOW FORM SUBMIT -> hidden inputs generate
+        // PAY NOW FORM SUBMIT -> hidden inputs generate
         $('#cartForm').on('submit', function(e) {
+
             let rows = $('#cart tr').not('#empty');
 
             if (rows.length === 0) {
@@ -297,7 +306,19 @@
             // Remove old hidden inputs
             $('#cartForm input[name^="cart"]').remove();
 
-            // Add hidden inputs dynamically
+            // 🔹 common data 
+            let commonId = 'POS-' + Date.now();
+            let c_name = $('input[name="c_name"]').val();
+            let cont = $('input[name="cont"]').val();
+
+            // common hidden inputs
+            $('#cartForm').append(`
+        <input type="hidden" name="cart[common_id]" value="${commonId}">
+        <input type="hidden" name="cart[c_name]" value="${c_name}">
+        <input type="hidden" name="cart[cont]" value="${cont}">
+    `);
+
+            // 🔹 items array 
             rows.each(function(index) {
                 let row = $(this);
                 let name = row.find('td:eq(0)').text();
@@ -306,15 +327,31 @@
                 let subtotal = row.find('.sub').text();
 
                 $('#cartForm').append(`
-            <input type="hidden" name="cart[${index}][name]" value="${name}">
-            <input type="hidden" name="cart[${index}][qty]" value="${qty}">
-            <input type="hidden" name="cart[${index}][price]" value="${price}">
-            <input type="hidden" name="cart[${index}][subtotal]" value="${subtotal}">
+            <input type="hidden" name="cart[items][${index}][name]" value="${name}">
+            <input type="hidden" name="cart[items][${index}][qty]" value="${qty}">
+            <input type="hidden" name="cart[items][${index}][price]" value="${price}">
+            <input type="hidden" name="cart[items][${index}][subtotal]" value="${subtotal}">
         `);
             });
 
-            // Update total hidden input
+            // total
             $('#formTotal').val($('#total').text());
+        });
+        $('#cartForm').on('submit', function(e) {
+            e.preventDefault(); // normal submit prevent
+
+            let form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function(res) {
+                    // 🔹 res = invoice URL
+                    window.open(res.invoice_url, '_blank'); // new tab
+                    alert('Payment Successful!');
+                    window.location.reload(); // page refresh
+                }
+            });
         });
     </script>
 </body>

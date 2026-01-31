@@ -7,6 +7,8 @@ use App\Models\POS;
 use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class POSController extends Controller
 {
@@ -33,17 +35,74 @@ class POSController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $cart = $request->cart; // array of products
+    {
+        $request->validate([
+            'c_name' => 'required|string|max:255',
+            'cont' => 'required|numeric|min:0',
+        ]);
 
-   
-    foreach($cart as $item){
-        Sale::create($item);
+        $cartData = $request->cart;
+
+        //  common info
+        $common_id = $cartData['common_id'];
+        $c_name = $cartData['c_name'];
+        $cont = $cartData['cont'];
+
+        $total = $request->total;
+
+        //  create Sale record
+        $sale = Sale::create([
+            'common_id' => $common_id,
+            'c_name' => $c_name,
+            'cont' => $cont,
+            'total' => $total,
+        ]);
+
+        //  create SaleItem records
+        foreach ($cartData['items'] as $item) {
+            $sale->items()->create([
+                'name' => $item['name'],
+                'qty' => $item['qty'],
+                'price' => $item['price'],
+                'subtotal' => $item['subtotal'],
+            ]);
+        }
+
+        //  redirect to invoice page
+        return response()->json([
+            'success' => true,
+            'invoice_url' => route('invoice.show', $common_id)
+        ]);
     }
 
-    return redirect()->back()->with('success', 'Payment Successful');
-}
 
+    public function sales()
+    {
+        // Eager load kore items
+        $sales = Sale::with('items')->orderBy('created_at', 'desc')->get();
+
+        return view('backend.sale.index', compact('sales'));
+    }
+
+    public function invoice($id)
+    {
+        $sale = Sale::with('items')->where('common_id', $id)->firstOrFail();
+
+        return view('pdfs.invoice', ['sales' => [$sale]]);
+    }
+
+    public function downloadInvoice($id)
+    {
+        // Sale with items
+        $sale = Sale::with('items')->where('common_id', $id)->firstOrFail();
+
+        $sales = collect([$sale]);
+        // Load Blade view for PDF
+        $pdf = PDF::loadView('pdfs.invoice', compact('sales'));
+
+        // Download PDF
+        return $pdf->stream('Invoicfilename: e_' . $sale->common_id . '.pdf');
+    }
     /**
      * Display the specified resource.
      */

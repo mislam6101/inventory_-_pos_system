@@ -77,12 +77,12 @@
                                         <th>#</th>
                                         <th>Invoice ID</th>
                                         <th>Customer</th>
-                                        <th>Contact</th>
                                         <th>Product</th>
                                         <th>Qty</th>
                                         <th>Price</th>
                                         <th>Subtotal</th>
                                         <th>Date</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,12 +93,12 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $sale->common_id }}</td>
                                         <td>{{ $sale->c_name }}</td>
-                                        <td>{{ $sale->cont }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->qty }}</td>
                                         <td>{{ $item->price }} ৳</td>
                                         <td>{{ $item->subtotal }} ৳</td>
                                         <td>{{ $sale->created_at->format('d-M-Y H:i') }}</td>
+                                        <td>Return</td>
                                     </tr>
                                     @endforeach
                                     @endforeach
